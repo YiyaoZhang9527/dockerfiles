@@ -1,0 +1,19 @@
+ARG name=opencv-rtsp-server:git_clone
+FROM ${name}
+
+LABEL author = 'MANMAN'
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 设置运行账户，设置环境变量并容器启动后需要运行的命令
+# 改变运行账户、工作目录和运行Shell（/bin/bash，默认Shell为/bin/sh）
+ENV HOME /home/manman
+ENV HOSTNAME MANMAN-PC
+WORKDIR /home/manman/
+
+# 修改ssh配置文件，文件位置/etc/ssh/sshd_config，添加允许所有主机连接，
+RUN sed -i 's/#PermitRootLogin prohibit-password/PermitRootLogin yes/g' /etc/ssh/sshd_config && \
+    echo 'sshd:ALL' >> /etc/hosts.aldlow
+# 开放22端口
+EXPOSE 22
+ENTRYPOINT service ssh start; tail -f /dev/null
+# ENTRYPOINT service ssh start; /bin/bash

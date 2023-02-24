@@ -1,0 +1,15 @@
+ARG name=ubuntu:18.04
+FROM ${name}
+
+LABEL author = 'MANMAN' 
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt update && apt upgrade 
+ENV DEBIAN_FRONTEND=noninteractive
+
+ENV HOME /home/manman
+ENV HOSTNAME MANMAN-PC
+WORKDIR /home/manman/
+
+# 初始化ohmyzsh
+RUN /bin/bash sh -c "$(curl -o /home/manman -fsSL https://raw.githubusercontent.com/ohmyzsh/ohmyzsh/master/tools/install.sh)"
+RUN /bin/bash -c "source ~/.zshrc"

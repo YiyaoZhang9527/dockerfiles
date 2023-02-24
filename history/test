@@ -1,0 +1,13 @@
+# The main test script to clean, build, and test a new image
+
+source config
+
+# Clean up old containers and images
+source clean
+
+# Build test image
+docker build --tag=${TEST_IMAGE_NAME} .
+
+# # Run a test container
+# TEST_SCRIPT="/bin/bash"
+# docker run --rm -it --gpus all --name $TEST_CONTAINER_NAME $TEST_IMAGE_NAME bash -c "${TEST_SCRIPT}"

@@ -1,0 +1,24 @@
+ARG name=ubuntu:22.04
+FROM ${name}
+
+LABEL author = 'MANMAN' 
+ENV DEBIAN_FRONTEND=noninteractive
+RUN apt -y --no-install-recommends update && apt -y --no-install-recommends upgrade 
+
+# 软件安装所必须的依赖时，有可能会出现对话框进行选择，如果不选择会导致镜像制作失败，需要添加如下语句
+#+++++++++++++++++++
+# 添加管理员账户MANMAN，设置工作目录
+RUN useradd -ms /bin/bash manman-cpp && \
+    adduser manman-cpp sudo && \
+    echo "manman-cpp:ManmanXand001Cpp"|chpasswd && \
+    echo "root:ManmanXand001Cpp"|chpasswd
+
+# 设置运行账户，设置环境变量并容器启动后需要运行的命令
+# 改变运行账户、工作目录和运行Shell（/bin/bash，默认Shell为/bin/sh）
+ENV HOME /home/manman-cpp
+ENV HOSTNAME MANMAN-CPP-PC
+WORKDIR /home/manman-cpp/
+
+ARG APT_PACKAGES="wget curl git axel neofetch net-tools zsh cmake g++ unzip openssh-server iftop htop"
+RUN apt-get update \
+    && apt-get install -y --no-install-recommends ${APT_PACKAGES}  

@@ -1,0 +1,2 @@
+docker run -it -p 7777:22 --name Ubuntu_rtsp_server -h MANMAN-PC opencv-rtsp-server:base
+ssh -p 7777 manman@192.168.1.13

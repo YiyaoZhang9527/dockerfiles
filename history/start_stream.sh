@@ -1,0 +1,2 @@
+/home/xnai/miniconda3/envs/stitching_tutorial_RTSP_streaming_using_GStreamer/bin/python /home/xnai/Documents/清华项目/stitching_tutorial/OpenCV-rtsp-server/stream.py --device_id ~/Videos/0/left.mp4 --fps 30 --image_width 640 --image_height 480 --port 8554 --stream_uri /video_stream
+/home/xnai/miniconda3/envs/stitching_tutorial_RTSP_streaming_using_GStreamer/bin/python /home/xnai/Documents/清华项目/stitching_tutorial/OpenCV-rtsp-server/open_rtsp.py

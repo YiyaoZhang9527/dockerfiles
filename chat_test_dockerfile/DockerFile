@@ -1,0 +1,30 @@
+# Use the official Kali Linux image as the base image
+FROM kalilinux/kali-rolling
+
+# Update the system and install the necessary packages
+RUN apt-get update && \
+    apt-get upgrade -y && \
+    apt-get install -y curl bzip2 && \
+    apt-get clean
+
+# Download the Anaconda installation script
+RUN curl -o ~/anaconda.sh https://repo.anaconda.com/archive/Anaconda3-2021.02-Linux-x86_64.sh
+
+# Install Anaconda
+RUN bash ~/anaconda.sh
+
+# Add Anaconda to the PATH
+ENV PATH ~/anaconda/bin:$PATH
+
+# Verify the installation
+RUN conda --version && \
+    python --version
+
+# Create a new Anaconda environment with Python 3.8
+RUN conda create -n env_python38 python=3.8
+
+# Activate the Anaconda environment
+SHELL ["conda", "run", "-n", "env_python38", "/bin/bash", "-c"]
+
+# Set the default command to run when starting the container
+CMD ["bash"]

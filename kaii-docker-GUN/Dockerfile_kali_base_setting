@@ -1,0 +1,16 @@
+ARG name=kali:base
+FROM ${name}
+
+LABEL author = 'Magic'
+ENV DEBIAN_FRONTEND=noninteractive
+
+# 设置运行账户，设置环境变量并容器启动后需要运行的命令
+# 改变运行账户、工作目录和运行Shell（/bin/bash，默认Shell为/bin/sh）
+ENV HOME /home/magic
+ENV HOSTNAME Magic-PC
+WORKDIR /home/magic/
+
+RUN echo LANG="zh_CN.UTF-8" >> /etc/default/locale
+RUN sed -i '$a\alias python="/usr/bin/python3"' ~/.zshrc
+
+ENTRYPOINT ["/bin/zsh"]

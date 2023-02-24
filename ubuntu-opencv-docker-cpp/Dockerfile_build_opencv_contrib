@@ -1,0 +1,33 @@
+ARG name=ubuntu-cpp-opencv:core
+FROM ${name}
+
+LABEL author = 'MANMAN' 
+ENV DEBIAN_FRONTEND=noninteractive
+
+ENV HOME /home/manman-cpp
+ENV HOSTNAME MANMAN-CPP-PC
+WORKDIR /home/manman-cpp/
+
+RUN g++ -v
+RUN wget -O opencv_contrib.zip https://github.com/opencv/opencv_contrib/archive/4.6.0.zip --no-check-certificate
+RUN unzip opencv_contrib.zip
+RUN mkdir -p ~/build 
+RUN cd ~/build \
+    && pwd \
+    && apt install -y --no-install-recommends build-essential \
+    && cmake -DOPENCV_EXTRA_MODULES_PATH=../opencv_contrib-4.6.0/modules ../opencv-4.6.0 \
+    && cmake 
+RUN cd ~/build \
+    -D CMAKE_BUILD_TYPE=RELEASE \
+    -D CMAKE_INSTALL_PREFIX=/usr/local \
+    -D BUILD_EXAMPLES=NO \
+    -D BUILD_opencv_apps=NO \
+    -D BUILD_DOCS=NO \
+    -D BUILD_PERF_TESTS=NO \
+    -D BUILD_TESTS=NO \
+    -D INSTALL_C_EXAMPLES=NO \
+    -D INSTALL_PYTHON_EXAMPLES=NO \
+    -D BUILD_ANDROID_EXAMPLES=NO \
+    -D BUILD_opencv_python2=NO 
+RUN cd  ~/build \
+    && cmake --build .

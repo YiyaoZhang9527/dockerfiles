@@ -1,0 +1,21 @@
+ARG name=ubuntu-cpp-env:base
+FROM ${name}
+
+LABEL author = 'MANMAN' 
+ENV DEBIAN_FRONTEND=noninteractive
+
+ENV HOME /home/manman-cpp
+ENV HOSTNAME MANMAN-CPP-PC
+WORKDIR /home/manman-cpp/
+
+# ARG APT_PACKAGES="cmake g++ wget unzip"
+# RUN apt-get update \
+#     && apt-get install -y --no-install-recommends ${APT_PACKAGES}
+
+RUN g++ -v
+RUN wget -O opencv.zip https://github.com/opencv/opencv/archive/4.6.0.zip --no-check-certificate
+RUN unzip opencv.zip
+RUN echo "build opencv core ..."
+RUN mkdir -p build && cd build \
+    cmake ~/opencv-4.6.0 \
+    cmake --build .
